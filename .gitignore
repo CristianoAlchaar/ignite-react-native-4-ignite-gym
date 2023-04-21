@@ -1,0 +1,7 @@
+node_modules
+.expo
+
+uploads/*.jpeg
+database/*.db
+
+mobile/config.ts
