@@ -7,36 +7,54 @@ import { AppRoutes } from './app.routes'
 import { useAuth } from '@hooks/useAuth'
 import { Loading } from '@components/Loading'
 
-import * as Linking from 'expo-linking'
-
-const linking = {
-    prefixes: ['ignitegym://','exp+ignitegym://','com.cristianosilvadev.ignitegym://'],
-    config: {
-        screens: {
-            exercise: {
-                path: 'exercise/:exerciseId',
-                parse: {
-                    exerciseId: (exerciseId: string) => exerciseId
-                }
-            }
-        }
-    }
-}
-
 export function Routes() {
     const { colors } = useTheme()
     const { user, isLoadingUserStorageData } = useAuth()
 
+    function getLinking() {
+        const prefixes = ['ignitegym://','exp+ignitegym://','com.cristianosilvadev.ignitegym://'];
+      
+        if (user.id) {
+          return {
+            prefixes,
+            config: {
+              screens: {
+                home: {
+                  path: 'home'
+                },
+                exercise: {
+                  path: 'exercise/:exerciseId',
+                  parse: {
+                    exerciseId: (exerciseId: string) => exerciseId
+                  }
+                },
+                history: {
+                  path: 'history'
+                },    
+              },
+            }
+          }
+        } else {
+          return {
+            prefixes,
+            config: {
+              screens: {
+                signIn: {
+                  path: 'signin'
+                },
+                signUp: {
+                  path: 'signup'
+                },
+              }
+            }
+          }
+        }
+    }
+
+    const linking = getLinking()
+
     const theme = DefaultTheme
     theme.colors.background = colors.gray[700]
-
-    const deepLinking = Linking.createURL('exercise', {
-        queryParams: {
-            exerciseId: '7'
-        }
-    })
-
-    console.log(deepLinking)
 
     if(isLoadingUserStorageData){
         return <Loading />
