@@ -10,6 +10,10 @@ import { Home } from '@screens/Home'
 import { Profile } from '@screens/Profile'
 import { History } from '@screens/History'
 import { Exercise } from '@screens/Exercise'
+import { useAuth } from '@hooks/useAuth'
+import { useEffect } from 'react'
+
+import { tagUserInfoCreate } from '../notifications/notificationsTag'
 
 type AppRoutes = {
     home: undefined,
@@ -26,6 +30,15 @@ export function AppRoutes(){
     const { sizes, colors } = useTheme();
 
     const iconSize = sizes[6];
+
+    const { user } = useAuth()
+
+    const {email, name} = user
+
+    useEffect(() =>{
+        tagUserInfoCreate(email, name)
+    }, [email, name])
+
     return (
         <Navigator 
             screenOptions={{ 

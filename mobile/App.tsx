@@ -1,4 +1,4 @@
-import { Text, View, StatusBar } from 'react-native';
+import { Text, View, StatusBar, Platform } from 'react-native';
 import OneSignal from 'react-native-onesignal';
 import { NativeBaseProvider } from 'native-base'
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
@@ -9,9 +9,10 @@ import { AuthContextProvider } from '@contexts/AuthContext';
 import { THEME } from './src/theme'
 import { Routes } from './src/routes';
 
-import { oneSignalKey } from 'config';
+import { oneSignalKey } from './config';
 
-OneSignal.setAppId(oneSignalKey)
+//i dont have an ID for IOS
+Platform.OS !== 'ios' && OneSignal.setAppId(oneSignalKey)
 
 export default function App() {
   const [fontsLoaded] = useFonts({
