@@ -1,7 +1,9 @@
 node_modules
 .expo
 
-uploads/*.jpeg
-database/*.db
+api/tmp/uploads/*.jpeg
+api/src/database/*.db
 
 mobile/config.ts
+
+mobile/android
